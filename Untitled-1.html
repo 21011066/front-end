@@ -1,0 +1,1221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Connect</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f7f5;
+    color: #26332b;
+}
+
+header {
+    background: #176b45;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    background: #105536;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+}
+
+nav button {
+    background: transparent;
+    color: white;
+    border: 1px solid #ffffff55;
+    padding: 10px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+nav button:hover {
+    background: #26885b;
+}
+
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: 25px auto;
+}
+
+section {
+    display: none;
+    background: white;
+    padding: 22px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #00000010;
+}
+
+section.active {
+    display: block;
+}
+
+h2 {
+    color: #176b45;
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 11px;
+    margin: 7px 0 13px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.action {
+    background: #176b45;
+    color: white;
+    border: none;
+    padding: 11px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 4px 3px 4px 0;
+}
+
+.action:hover {
+    background: #105536;
+}
+
+.secondary {
+    background: #52665a;
+}
+
+.danger {
+    background: #b33b3b;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    padding: 15px;
+    margin: 12px 0;
+    background: #fff;
+}
+
+.card img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 7px;
+    margin: 8px 0;
+}
+
+.price {
+    color: #176b45;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 5px;
+    background: #e6f3eb;
+    color: #176b45;
+    font-size: 13px;
+    margin: 5px 0;
+}
+
+.muted {
+    color: #68756c;
+    font-size: 13px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #105536;
+    color: white;
+    margin-top: 30px;
+}
+
+@media(max-width: 600px) {
+    nav {
+        flex-direction: column;
+    }
+
+    nav button {
+        width: 100%;
+    }
+
+    .container {
+        width: 95%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Community Connect</h1>
+    <p>Connecting communities, businesses and local services</p>
+</header>
+
+<nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('announcements')">Announcements</button>
+    <button onclick="showPage('events')">Events</button>
+    <button onclick="showPage('services')">Services</button>
+    <button onclick="showPage('jobs')">Piece Jobs</button>
+    <button onclick="showPage('contributions')">Contributions</button>
+    <button onclick="showPage('reports')">Report Issues</button>
+    <button onclick="showPage('marketplace')">Marketplace</button>
+    <button onclick="showPage('login')">Login</button>
+    <button onclick="logout()">Logout</button>
+</nav>
+
+<div class="container">
+
+<!-- HOME -->
+<section id="home" class="active">
+    <h2>Welcome to Community Connect</h2>
+    <p>
+        Community Connect is a platform that helps residents access
+        community information, discover local businesses, find piece jobs
+        and report community problems.
+    </p>
+    <p>
+        Local advertisers can promote their products and services,
+        while the administrator manages information shared on the platform.
+    </p>
+    <button class="action" onclick="showPage('marketplace')">
+        Explore Marketplace
+    </button>
+</section>
+
+<!-- LOGIN -->
+<section id="login">
+    <h2>Account Login</h2>
+
+    <label>Select account type</label>
+    <select id="loginRole">
+        <option value="client">Client</option>
+        <option value="advertiser">Advertiser</option>
+        <option value="user">User (Administrator)</option>
+    </select>
+
+    <input id="loginEmail" type="email" placeholder="Email address">
+    <input id="loginPassword" type="password" placeholder="Password">
+
+    <button class="action" onclick="login()">Sign In</button>
+
+    <button class="action secondary" onclick="biometricLogin()">
+        Sign in with Face ID / Biometrics
+    </button>
+
+    <hr style="margin:20px 0">
+
+    <h3>Create an account</h3>
+    <input id="regName" placeholder="Full name or business name">
+    <input id="regEmail" type="email" placeholder="Email address">
+    <input id="regPassword" type="password" placeholder="Create password">
+
+    <select id="regRole">
+        <option value="client">Client</option>
+        <option value="advertiser">Advertiser</option>
+    </select>
+
+    <button class="action" onclick="registerAccount()">
+        Register
+    </button>
+
+    <p class="muted">
+        Administrator accounts must be created or approved by the
+        system owner. Public administrator registration is disabled.
+    </p>
+    <p id="loginMessage"></p>
+</section>
+
+<!-- ADMIN DASHBOARD -->
+<section id="adminDashboard">
+    <h2>User Dashboard – Administrator</h2>
+    <p>Welcome, Administrator.</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Community Information</h3>
+            <p>Manage announcements, events and piece jobs.</p>
+        </div>
+        <div class="card">
+            <h3>Issue Reports</h3>
+            <p>Review community reports and update their progress.</p>
+        </div>
+        <div class="card">
+            <h3>Advertisement Approval</h3>
+            <p>Review advertisements before they become public.</p>
+        </div>
+    </div>
+
+    <h3>Pending Advertisements</h3>
+    <div id="pendingAds"></div>
+
+    <h3>Manage Announcements</h3>
+    <input id="announcementTitle" placeholder="Announcement title">
+    <textarea id="announcementText" placeholder="Announcement details"></textarea>
+    <button class="action" onclick="addAnnouncement()">Publish Announcement</button>
+
+    <h3>Manage Events</h3>
+    <input id="eventTitle" placeholder="Event or meeting name">
+    <input id="eventDate" type="date">
+    <input id="eventLocation" placeholder="Event location">
+    <textarea id="eventDescription" placeholder="Event details"></textarea>
+    <button class="action" onclick="addEvent()">Publish Event</button>
+
+    <h3>Post Piece Jobs</h3>
+    <input id="jobTitle" placeholder="Job title">
+    <input id="jobLocation" placeholder="Location">
+    <input id="jobPay" placeholder="Payment or amount">
+    <textarea id="jobDescription" placeholder="Job description"></textarea>
+    <button class="action" onclick="addJob()">Publish Piece Job</button>
+
+    <h3>Create Community Contribution Request</h3>
+    <input id="contributionTitle" placeholder="Contribution title">
+    <select id="contributionCategory">
+        <option>Funeral Expenses</option>
+        <option>Community Events</option>
+        <option>Community Projects</option>
+        <option>Other Shared Expenses</option>
+    </select>
+    <input id="contributionTarget" type="number" placeholder="Target amount in Rands">
+    <textarea id="contributionDescription" placeholder="Explain the contribution request"></textarea>
+    <button class="action" onclick="addContribution()">Create Request</button>
+</section>
+
+<!-- CLIENT DASHBOARD -->
+<section id="clientDashboard">
+    <h2>Client Dashboard</h2>
+    <p>Welcome to your Community Connect account.</p>
+    <div class="grid">
+        <div class="card">
+            <h3>Community Information</h3>
+            <p>View announcements and upcoming events.</p>
+        </div>
+        <div class="card">
+            <h3>Local Marketplace</h3>
+            <p>Discover products and services from local advertisers.</p>
+        </div>
+        <div class="card">
+            <h3>Community Reports</h3>
+            <p>Submit issues and follow their progress.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ADVERTISER DASHBOARD -->
+<section id="advertiserDashboard">
+    <h2>Advertiser Dashboard</h2>
+    <p>Advertise your products and services to the community.</p>
+
+    <h3>Post a Product or Service</h3>
+
+    <input id="businessName" placeholder="Business name">
+    <input id="productTitle" placeholder="Product or service name">
+
+    <select id="productCategory">
+        <option>Food and Groceries</option>
+        <option>Clothing</option>
+        <option>Electronics</option>
+        <option>Farming Supplies</option>
+        <option>Beauty and Personal Care</option>
+        <option>Transport</option>
+        <option>Other Services</option>
+    </select>
+
+    <textarea id="productDescription" placeholder="Describe your product or service"></textarea>
+    <input id="productPrice" type="number" min="0" step="0.01" placeholder="Price in Rands">
+    <input id="advertiserPhone" type="tel" placeholder="Contact phone number">
+    <input id="advertiserContactEmail" type="email" placeholder="Contact email (optional)">
+
+    <label>Upload product picture (optional)</label>
+    <input id="productImage" type="file" accept="image/*" onchange="previewProductImage(event)">
+
+    <img id="imagePreview" class="hidden" style="max-width:200px;border-radius:8px" alt="Product preview">
+
+    <button class="action" onclick="publishAd()">Submit Advertisement</button>
+
+    <h3>My Advertisements</h3>
+    <div id="myAds"></div>
+</section>
+
+<!-- ANNOUNCEMENTS -->
+<section id="announcements">
+    <h2>Community Announcements</h2>
+    <div id="announcementList"></div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+    <h2>Community Events and Meetings</h2>
+    <div id="eventList"></div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+    <h2>Community Services Directory</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Health Services</h3>
+            <p>Find local clinics and health facilities.</p>
+        </div>
+        <div class="card">
+            <h3>Education</h3>
+            <p>Find schools and learning facilities.</p>
+        </div>
+        <div class="card">
+            <h3>Transport</h3>
+            <p>Discover local transport services.</p>
+        </div>
+        <div class="card">
+            <h3>Local Businesses</h3>
+            <p>Find businesses and service providers.</p>
+        </div>
+    </div>
+</section>
+
+<!-- PIECE JOBS -->
+<section id="jobs">
+    <h2>Piece Jobs</h2>
+    <p>Find short-term and casual work opportunities in your area.</p>
+    <div id="jobList"></div>
+</section>
+
+<!-- CONTRIBUTIONS -->
+<section id="contributions">
+    <h2>Community Contributions</h2>
+    <p>
+        Residents can view community contribution requests and record
+        their intended contributions.
+    </p>
+    <p class="muted">
+        This demonstration records pledges only. It does not transfer money.
+    </p>
+    <div id="contributionList"></div>
+</section>
+
+<!-- REPORTS -->
+<section id="reports">
+    <h2>Report a Community Issue</h2>
+
+    <div id="reportForm">
+        <select id="reportCategory">
+            <option>Road Damage</option>
+            <option>Waste Management</option>
+            <option>Other</option>
+        </select>
+
+        <input id="reportLocation" placeholder="Where is the problem?">
+        <textarea id="reportDescription" placeholder="Describe the issue"></textarea>
+
+        <button class="action" onclick="submitReport()">Submit Report</button>
+    </div>
+
+    <h3>Community Reports and Progress</h3>
+    <div id="reportList"></div>
+</section>
+
+<!-- MARKETPLACE -->
+<section id="marketplace">
+    <h2>Local Marketplace</h2>
+    <p>
+        Discover products and services advertised by businesses
+        in your community.
+    </p>
+
+    <input id="marketSearch" placeholder="Search products or businesses..." oninput="displayMarketplace()">
+
+    <select id="marketCategory" onchange="displayMarketplace()">
+        <option value="">All Categories</option>
+        <option>Food and Groceries</option>
+        <option>Clothing</option>
+        <option>Electronics</option>
+        <option>Farming Supplies</option>
+        <option>Beauty and Personal Care</option>
+        <option>Transport</option>
+        <option>Other Services</option>
+    </select>
+
+    <div id="marketplaceList" class="grid"></div>
+</section>
+
+</div>
+
+<footer>
+    <p>Community Connect | Smarter, Safer Connected Communities</p>
+</footer>
+
+<script>
+// ========================================
+// DATA STORAGE
+// ========================================
+
+function getData(key) {
+    return JSON.parse(localStorage.getItem(key) || "[]");
+}
+
+function saveData(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+let accounts = getData("cc_accounts");
+let ads = getData("cc_ads");
+let announcements = getData("cc_announcements");
+let events = getData("cc_events");
+let jobs = getData("cc_jobs");
+let contributions = getData("cc_contributions");
+let reports = getData("cc_reports");
+
+let currentUser = JSON.parse(sessionStorage.getItem("cc_currentUser") || "null");
+let selectedImage = "";
+
+// ========================================
+// NAVIGATION AND ACCOUNT ACCESS
+// ========================================
+
+function showPage(id) {
+    const protectedPages = {
+        adminDashboard: "user",
+        clientDashboard: "client",
+        advertiserDashboard: "advertiser"
+    };
+
+    if (protectedPages[id] && currentUser?.role !== protectedPages[id]) {
+        alert("Please sign in with the correct account.");
+        id = "login";
+    }
+
+    document.querySelectorAll("section").forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+    refreshAll();
+}
+
+function registerAccount() {
+    const name = document.getElementById("regName").value.trim();
+    const email = document.getElementById("regEmail").value.trim().toLowerCase();
+    const password = document.getElementById("regPassword").value;
+    const role = document.getElementById("regRole").value;
+
+    if (!name || !email || !password) {
+        alert("Please complete all registration fields.");
+        return;
+    }
+
+    if (accounts.some(a => a.email === email)) {
+        alert("An account with this email already exists.");
+        return;
+    }
+
+    accounts.push({name, email, password, role});
+    saveData("cc_accounts", accounts);
+
+    alert("Account created. You can now sign in.");
+}
+
+function login() {
+    const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+    const password = document.getElementById("loginPassword").value;
+    const role = document.getElementById("loginRole").value;
+
+    // Demo-only administrator account:
+    // Change this before demonstrating and never use it in production.
+    let account = accounts.find(a =>
+        a.email === email &&
+        a.password === password &&
+        a.role === role
+    );
+
+    if (role === "user" && email === "admin@communityconnect.co.za" &&
+        password === "Admin123!") {
+        account = {
+            name: "Administrator",
+            email,
+            role: "user"
+        };
+    }
+
+    if (!account) {
+        document.getElementById("loginMessage").textContent =
+            "Incorrect login details or account type.";
+        return;
+    }
+
+    currentUser = {
+        name: account.name,
+        email: account.email,
+        role: account.role
+    };
+
+    sessionStorage.setItem("cc_currentUser", JSON.stringify(currentUser));
+
+    alert("Welcome, " + account.name);
+
+    if (role === "user") showPage("adminDashboard");
+    if (role === "client") showPage("clientDashboard");
+    if (role === "advertiser") showPage("advertiserDashboard");
+}
+
+function logout() {
+    currentUser = null;
+    sessionStorage.removeItem("cc_currentUser");
+    showPage("home");
+    alert("You have signed out.");
+}
+
+function requireRole(role) {
+    if (!currentUser || currentUser.role !== role) {
+        alert("You do not have permission to perform this action.");
+        return false;
+    }
+    return true;
+}
+
+// This is only a demonstration message.
+// Real biometric authentication needs a secure WebAuthn backend.
+async function biometricLogin() {
+    alert(
+        "Biometric sign-in demonstration. Real Face ID, Windows Hello " +
+        "or passkey authentication must be connected to a secure server."
+    );
+}
+
+// ========================================
+// SECURITY HELPER
+// ========================================
+
+function safe(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+// ========================================
+// PRODUCT IMAGE PREVIEW
+// ========================================
+
+function previewProductImage(event) {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please select an image file.");
+        event.target.value = "";
+        return;
+    }
+
+    if (file.size > 700000) {
+        alert("Please choose an image smaller than 700 KB for this demo.");
+        event.target.value = "";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        selectedImage = e.target.result;
+        const preview = document.getElementById("imagePreview");
+        preview.src = selectedImage;
+        preview.classList.remove("hidden");
+    };
+
+    reader.readAsDataURL(file);
+}
+
+// ========================================
+// ADVERTISER: CREATE ADVERTISEMENT
+// ========================================
+
+function publishAd() {
+    if (!requireRole("advertiser")) return;
+
+    const business = document.getElementById("businessName").value.trim();
+    const title = document.getElementById("productTitle").value.trim();
+    const category = document.getElementById("productCategory").value;
+    const description = document.getElementById("productDescription").value.trim();
+    const price = document.getElementById("productPrice").value;
+    const phone = document.getElementById("advertiserPhone").value.trim();
+    const contactEmail = document.getElementById("advertiserContactEmail").value.trim();
+
+    if (!business || !title || !description || price === "" || !phone) {
+        alert("Please complete the business, product, description, price and phone fields.");
+        return;
+    }
+
+    if (Number(price) < 0 || !Number.isFinite(Number(price))) {
+        alert("Please enter a valid price.");
+        return;
+    }
+
+    const ad = {
+        id: Date.now(),
+        owner: currentUser.email,
+        business,
+        title,
+        category,
+        description,
+        price: Number(price),
+        phone,
+        contactEmail,
+        image: selectedImage,
+        available: true,
+        status: "Pending"
+    };
+
+    ads.push(ad);
+    saveData("cc_ads", ads);
+
+    alert("Advertisement submitted. The administrator must approve it before it appears in the marketplace.");
+
+    document.getElementById("businessName").value = "";
+    document.getElementById("productTitle").value = "";
+    document.getElementById("productDescription").value = "";
+    document.getElementById("productPrice").value = "";
+    document.getElementById("advertiserPhone").value = "";
+    document.getElementById("advertiserContactEmail").value = "";
+    document.getElementById("productImage").value = "";
+    document.getElementById("imagePreview").classList.add("hidden");
+    selectedImage = "";
+
+    refreshAll();
+}
+
+// ========================================
+// ADVERTISER: EDIT OWN AD
+// ========================================
+
+function editAd(id) {
+    if (!requireRole("advertiser")) return;
+
+    const ad = ads.find(a =>
+        a.id === id && a.owner === currentUser.email
+    );
+
+    if (!ad) {
+        alert("Advertisement not found.");
+        return;
+    }
+
+    const newTitle = prompt("Product or service name:", ad.title);
+    if (newTitle === null || !newTitle.trim()) return;
+
+    const newPrice = prompt("New price in Rands:", ad.price);
+    if (newPrice === null || newPrice.trim() === "" ||
+        !Number.isFinite(Number(newPrice)) || Number(newPrice) < 0) {
+        alert("Please enter a valid price.");
+        return;
+    }
+
+    const newDescription = prompt("Update description:", ad.description);
+    if (newDescription === null) return;
+
+    ad.title = newTitle.trim();
+    ad.price = Number(newPrice);
+    ad.description = newDescription.trim();
+
+    // Changes require approval again before public display.
+    ad.status = "Pending";
+
+    saveData("cc_ads", ads);
+    alert("Your updated advertisement has been submitted for approval.");
+    refreshAll();
+}
+
+// ========================================
+// ADVERTISER: AVAILABILITY
+// ========================================
+
+function toggleAvailability(id) {
+    if (!requireRole("advertiser")) return;
+
+    const ad = ads.find(a =>
+        a.id === id && a.owner === currentUser.email
+    );
+
+    if (!ad) return;
+
+    ad.available = !ad.available;
+    saveData("cc_ads", ads);
+    refreshAll();
+}
+
+// ========================================
+// ADVERTISER: DELETE OWN AD
+// ========================================
+
+function deleteAd(id) {
+    if (!requireRole("advertiser")) return;
+
+    if (!confirm("Delete this advertisement?")) return;
+
+    ads = ads.filter(a =>
+        !(a.id === id && a.owner === currentUser.email)
+    );
+
+    saveData("cc_ads", ads);
+    refreshAll();
+}
+
+// ========================================
+// ADMINISTRATOR: APPROVE / REJECT ADS
+// ========================================
+
+function updateAdApproval(id, decision) {
+    if (!requireRole("user")) return;
+
+    const ad = ads.find(a => a.id === id);
+    if (!ad) return;
+
+    ad.status = decision;
+    saveData("cc_ads", ads);
+
+    alert("Advertisement marked as " + decision + ".");
+    refreshAll();
+}
+
+function displayPendingAds() {
+    const area = document.getElementById("pendingAds");
+    if (!area) return;
+
+    const pending = ads.filter(a => a.status === "Pending");
+
+    if (!pending.length) {
+        area.innerHTML = "<p>No advertisements are waiting for approval.</p>";
+        return;
+    }
+
+    area.innerHTML = pending.map(ad => `
+        <div class="card">
+            <h3>${safe(ad.title)}</h3>
+            <p><b>Business:</b> ${safe(ad.business)}</p>
+            <p><b>Category:</b> ${safe(ad.category)}</p>
+            <p><b>Price:</b> R${Number(ad.price).toFixed(2)}</p>
+            <p>${safe(ad.description)}</p>
+            <button class="action" onclick="updateAdApproval(${ad.id}, 'Approved')">
+                Approve
+            </button>
+            <button class="action danger" onclick="updateAdApproval(${ad.id}, 'Rejected')">
+                Reject
+            </button>
+        </div>
+    `).join("");
+}
+
+// ========================================
+// PUBLIC MARKETPLACE
+// ========================================
+
+function displayMarketplace() {
+    const area = document.getElementById("marketplaceList");
+    if (!area) return;
+
+    const search = document.getElementById("marketSearch").value.toLowerCase();
+    const category = document.getElementById("marketCategory").value;
+
+    const visibleAds = ads.filter(ad =>
+        ad.status === "Approved" &&
+        ad.available &&
+        (!category || ad.category === category) &&
+        (
+            ad.title.toLowerCase().includes(search) ||
+            ad.business.toLowerCase().includes(search) ||
+            ad.description.toLowerCase().includes(search)
+        )
+    );
+
+    if (!visibleAds.length) {
+        area.innerHTML = "<p>No approved products or services match your search.</p>";
+        return;
+    }
+
+    area.innerHTML = visibleAds.map(ad => {
+        const phoneDigits = ad.phone.replace(/\D/g, "");
+        const whatsappNumber = phoneDigits.startsWith("0")
+            ? "27" + phoneDigits.substring(1)
+            : phoneDigits;
+
+        return `
+        <div class="card">
+            ${ad.image ? `<img src="${ad.image}" alt="${safe(ad.title)}">` : ""}
+            <span class="status">Available</span>
+            <h3>${safe(ad.title)}</h3>
+            <p><b>Business:</b> ${safe(ad.business)}</p>
+            <p><b>Category:</b> ${safe(ad.category)}</p>
+            <p>${safe(ad.description)}</p>
+            <p class="price">R${Number(ad.price).toFixed(2)}</p>
+            <p><b>Contact:</b> ${safe(ad.phone)}</p>
+            ${ad.contactEmail ? `<p><b>Email:</b> ${safe(ad.contactEmail)}</p>` : ""}
+            <a href="https://wa.me/${encodeURIComponent(whatsappNumber)}"
+               target="_blank" rel="noopener noreferrer">
+               <button class="action">Contact on WhatsApp</button>
+            </a>
+        </div>
+        `;
+    }).join("");
+}
+
+// ========================================
+// ADVERTISER: VIEW OWN ADS
+// ========================================
+
+function displayMyAds() {
+    const area = document.getElementById("myAds");
+    if (!area) return;
+
+    if (!currentUser || currentUser.role !== "advertiser") {
+        area.innerHTML = "";
+        return;
+    }
+
+    const ownAds = ads.filter(a => a.owner === currentUser.email);
+
+    if (!ownAds.length) {
+        area.innerHTML = "<p>You have not posted any advertisements yet.</p>";
+        return;
+    }
+
+    area.innerHTML = ownAds.map(ad => `
+        <div class="card">
+            ${ad.image ? `<img src="${ad.image}" alt="${safe(ad.title)}">` : ""}
+            <h3>${safe(ad.title)}</h3>
+            <p><b>Price:</b> R${Number(ad.price).toFixed(2)}</p>
+            <p><b>Approval:</b> ${safe(ad.status)}</p>
+            <p><b>Availability:</b> ${ad.available ? "Available" : "Unavailable"}</p>
+
+            <button class="action" onclick="editAd(${ad.id})">Edit Listing</button>
+            <button class="action secondary" onclick="toggleAvailability(${ad.id})">
+                Change Availability
+            </button>
+            <button class="action danger" onclick="deleteAd(${ad.id})">Delete</button>
+        </div>
+    `).join("");
+}
+
+// ========================================
+// ANNOUNCEMENTS
+// ========================================
+
+function addAnnouncement() {
+    if (!requireRole("user")) return;
+
+    const title = document.getElementById("announcementTitle").value.trim();
+    const description = document.getElementById("announcementText").value.trim();
+
+    if (!title || !description) {
+        alert("Complete the announcement fields.");
+        return;
+    }
+
+    announcements.push({title, description, date: new Date().toLocaleDateString()});
+    saveData("cc_announcements", announcements);
+
+    document.getElementById("announcementTitle").value = "";
+    document.getElementById("announcementText").value = "";
+    refreshAll();
+}
+
+function displayAnnouncements() {
+    document.getElementById("announcementList").innerHTML =
+        announcements.map(a => `
+            <div class="card">
+                <h3>${safe(a.title)}</h3>
+                <p>${safe(a.description)}</p>
+                <small>${safe(a.date)}</small>
+            </div>
+        `).join("") || "<p>No announcements yet.</p>";
+}
+
+// ========================================
+// EVENTS
+// ========================================
+
+function addEvent() {
+    if (!requireRole("user")) return;
+
+    const title = document.getElementById("eventTitle").value.trim();
+    const date = document.getElementById("eventDate").value;
+    const location = document.getElementById("eventLocation").value.trim();
+    const description = document.getElementById("eventDescription").value.trim();
+
+    if (!title || !date || !location || !description) {
+        alert("Complete all event fields.");
+        return;
+    }
+
+    events.push({title, date, location, description});
+    saveData("cc_events", events);
+    refreshAll();
+}
+
+function displayEvents() {
+    document.getElementById("eventList").innerHTML =
+        events.map(e => `
+            <div class="card">
+                <h3>${safe(e.title)}</h3>
+                <p><b>Date:</b> ${safe(e.date)}</p>
+                <p><b>Location:</b> ${safe(e.location)}</p>
+                <p>${safe(e.description)}</p>
+            </div>
+        `).join("") || "<p>No events posted yet.</p>";
+}
+
+// ========================================
+// PIECE JOBS
+// ========================================
+
+function addJob() {
+    if (!requireRole("user")) return;
+
+    const title = document.getElementById("jobTitle").value.trim();
+    const location = document.getElementById("jobLocation").value.trim();
+    const pay = document.getElementById("jobPay").value.trim();
+    const description = document.getElementById("jobDescription").value.trim();
+
+    if (!title || !location || !description) {
+        alert("Complete the piece job details.");
+        return;
+    }
+
+    jobs.push({title, location, pay, description});
+    saveData("cc_jobs", jobs);
+    refreshAll();
+}
+
+function displayJobs() {
+    document.getElementById("jobList").innerHTML =
+        jobs.map(j => `
+            <div class="card">
+                <h3>${safe(j.title)}</h3>
+                <p><b>Location:</b> ${safe(j.location)}</p>
+                <p><b>Payment:</b> ${safe(j.pay || "To be discussed")}</p>
+                <p>${safe(j.description)}</p>
+            </div>
+        `).join("") || "<p>No piece jobs available.</p>";
+}
+
+// ========================================
+// COMMUNITY CONTRIBUTIONS
+// ========================================
+
+function addContribution() {
+    if (!requireRole("user")) return;
+
+    const title = document.getElementById("contributionTitle").value.trim();
+    const category = document.getElementById("contributionCategory").value;
+    const target = Number(document.getElementById("contributionTarget").value);
+    const description = document.getElementById("contributionDescription").value.trim();
+
+    if (!title || !description || !Number.isFinite(target) || target <= 0) {
+        alert("Enter a title, description and valid target amount.");
+        return;
+    }
+
+    contributions.push({
+        id: Date.now(),
+        title,
+        category,
+        target,
+        description,
+        pledges: 0
+    });
+
+    saveData("cc_contributions", contributions);
+    refreshAll();
+}
+
+function makePledge(id) {
+    if (!requireRole("client")) return;
+
+    const amount = Number(prompt("Enter your intended contribution in Rands:"));
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+    }
+
+    const item = contributions.find(c => c.id === id);
+    if (!item) return;
+
+    item.pledges += amount;
+    saveData("cc_contributions", contributions);
+    alert("Your contribution pledge has been recorded.");
+    refreshAll();
+}
+
+function displayContributions() {
+    document.getElementById("contributionList").innerHTML =
+        contributions.map(c => `
+            <div class="card">
+                <h3>${safe(c.title)}</h3>
+                <p><b>Category:</b> ${safe(c.category)}</p>
+                <p>${safe(c.description)}</p>
+                <p><b>Target:</b> R${Number(c.target).toFixed(2)}</p>
+                <p><b>Pledged:</b> R${Number(c.pledges).toFixed(2)}</p>
+                <button class="action" onclick="makePledge(${c.id})">
+                    Make a Pledge
+                </button>
+            </div>
+        `).join("") || "<p>No contribution requests yet.</p>";
+}
+
+// ========================================
+// COMMUNITY ISSUE REPORTING
+// ========================================
+
+function submitReport() {
+    if (!requireRole("client")) return;
+
+    const category = document.getElementById("reportCategory").value;
+    const location = document.getElementById("reportLocation").value.trim();
+    const description = document.getElementById("reportDescription").value.trim();
+
+    if (!location || !description) {
+        alert("Enter the location and describe the issue.");
+        return;
+    }
+
+    reports.push({
+        id: Date.now(),
+        category,
+        location,
+        description,
+        status: "Submitted",
+        reporter: currentUser.email
+    });
+
+    saveData("cc_reports", reports);
+
+    document.getElementById("reportLocation").value = "";
+    document.getElementById("reportDescription").value = "";
+
+    alert("Your report has been submitted.");
+    refreshAll();
+}
+
+function updateReport(id) {
+    if (!requireRole("user")) return;
+
+    const report = reports.find(r => r.id === id);
+    if (!report) return;
+
+    const newStatus = prompt(
+        "Enter status: Submitted, Under Review, In Progress or Resolved",
+        report.status
+    );
+
+    const allowed = ["Submitted", "Under Review", "In Progress", "Resolved"];
+
+    if (!allowed.includes(newStatus)) {
+        alert("Please enter one of the listed statuses.");
+        return;
+    }
+
+    report.status = newStatus;
+    saveData("cc_reports", reports);
+    refreshAll();
+}
+
+function displayReports() {
+    const visibleReports = currentUser?.role === "user"
+        ? reports
+        : reports.filter(r => r.reporter === currentUser?.email);
+
+    document.getElementById("reportList").innerHTML =
+        visibleReports.map(r => `
+            <div class="card">
+                <h3>${safe(r.category)}</h3>
+                <p><b>Location:</b> ${safe(r.location)}</p>
+                <p>${safe(r.description)}</p>
+                <span class="status">${safe(r.status)}</span>
+                ${currentUser?.role === "user"
+                    ? `<button class="action" onclick="updateReport(${r.id})">Update Status</button>`
+                    : ""}
+            </div>
+        `).join("") || "<p>No reports to display.</p>";
+}
+
+// ========================================
+// REFRESH ALL DISPLAY AREAS
+// ========================================
+
+function refreshAll() {
+    ads = getData("cc_ads");
+    announcements = getData("cc_announcements");
+    events = getData("cc_events");
+    jobs = getData("cc_jobs");
+    contributions = getData("cc_contributions");
+    reports = getData("cc_reports");
+
+    displayPendingAds();
+    displayMyAds();
+    displayMarketplace();
+    displayAnnouncements();
+    displayEvents();
+    displayJobs();
+    displayContributions();
+    displayReports();
+}
+
+// ========================================
+// START APPLICATION
+// ========================================
+
+refreshAll();
+
+if (currentUser) {
+    if (currentUser.role === "user") showPage("adminDashboard");
+    else if (currentUser.role === "client") showPage("clientDashboard");
+    else if (currentUser.role === "advertiser") showPage("advertiserDashboard");
+}
+</script>
+
+</body>
+</html>
